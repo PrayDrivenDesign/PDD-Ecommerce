@@ -1,0 +1,17 @@
+FROM openjdk:11 AS builder
+
+COPY ./gradlew .
+COPY gradle gradle
+COPY ./settings.gradle .
+COPY ./build.gradle .
+
+COPY core core
+COPY api-gateway api-gateway
+
+RUN chmod +x ./gradlew
+RUN ./gradlew :api-gateway:bootJar
+
+FROM openjdk:11-jre-slim AS release
+ARG JAR_FILE=build/libs/*.jar
+COPY --from=builder api-gateway/${JAR_FILE} api-gateway.jar
+CMD ["java","-jar","/api-gateway.jar"]

@@ -1,0 +1,17 @@
+FROM openjdk:11 AS builder
+
+COPY ./gradlew .
+COPY gradle gradle
+COPY ./settings.gradle .
+COPY ./build.gradle .
+
+COPY core core
+COPY service-discovery service-discovery
+
+RUN chmod +x ./gradlew
+RUN ./gradlew :service-discovery:bootJar
+
+FROM openjdk:11-jre-slim AS release
+ARG JAR_FILE=build/libs/*.jar
+COPY --from=builder service-discovery/${JAR_FILE} service-discovery.jar
+CMD ["java","-jar","/service-discovery.jar"]

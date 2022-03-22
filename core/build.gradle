@@ -1,0 +1,22 @@
+ext{
+    set("jwtVersion","0.10.5")
+    set("springBootVersion","2.6.4")
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation "org.springframework.boot:spring-boot-starter:${springBootVersion}"
+    implementation "io.jsonwebtoken:jjwt-api:${jwtVersion}"
+    runtimeOnly "io.jsonwebtoken:jjwt-impl:${jwtVersion}"
+    runtimeOnly "io.jsonwebtoken:jjwt-jackson:${jwtVersion}"
+}
+bootJar {
+    enabled = false
+}
+jar {
+    enabled = true
+}
+

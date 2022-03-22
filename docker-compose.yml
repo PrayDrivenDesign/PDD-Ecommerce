@@ -1,0 +1,45 @@
+version: "3.9"
+services:
+  service-discovery:
+    build:
+      context: .
+      dockerfile: ./service-discovery/Dockerfile-local
+    ports:
+      - "8761:8761"
+    networks:
+      - ecommerce
+    restart: on-failure
+
+  user-service:
+    depends_on:
+      - service-discovery
+    build:
+      context: .
+      dockerfile: ./user-service/Dockerfile-local
+    ports:
+      - "8080:8080"
+    networks:
+      - ecommerce
+    environment:
+      SERVICE_DISCOVERY_HOST: service-discovery
+      SERVICE_DISCOVERY_PORT: 8761
+    restart: on-failure
+
+  api-gateway:
+    depends_on:
+      - service-discovery
+      - user-service
+    build:
+      context: .
+      dockerfile: ./api-gateway/Dockerfile-local
+    ports:
+      - "8000:8000"
+    networks:
+      - ecommerce
+    environment:
+      SERVICE_DISCOVERY_HOST: service-discovery
+      SERVICE_DISCOVERY_PORT: 8761
+    restart: on-failure
+networks:
+  ecommerce:
+    driver: bridge
