@@ -23,14 +23,14 @@ public class OrderProduct {
     private int count;
 
     @Column(name = "price")
-    private Money money;
+    private Money price;
 
     @Builder
     public OrderProduct(Order order, Product product, int count) {
         this.order = order;
         this.product = product;
         this.count = count;
-        this.money = calculateTotalPrice();
+        this.price = calculateTotalPrice();
     }
 
     public Money calculateTotalPrice() {

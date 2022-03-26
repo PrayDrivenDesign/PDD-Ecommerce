@@ -49,7 +49,7 @@ public class Order {
 
     private Money calculateTotalPrice(List<OrderProduct> products) {
         int totalPrice = products.stream()
-                .map(OrderProduct::calculateTotalPrice)
+                .map(OrderProduct::getPrice)
                 .map(Money::getValue).reduce(0, Integer::sum);
         return new Money(totalPrice);
     }
