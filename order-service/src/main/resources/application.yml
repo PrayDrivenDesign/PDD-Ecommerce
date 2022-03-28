@@ -1,0 +1,9 @@
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: ${ORDER_DATASOURCE_URL}
+    password: ${ORDER_DATASOURCE_USERNAME}
+    username: ${ORDER_DATASOURCE_PASSWORD}
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
