@@ -1,4 +1,4 @@
-package com.msa.domain;
+package com.msa.domain.vo;
 
 import lombok.Getter;
 

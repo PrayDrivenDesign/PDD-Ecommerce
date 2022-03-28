@@ -1,6 +1,10 @@
 package com.msa.domain;
 
-import lombok.*;
+import com.msa.domain.vo.Money;
+import lombok.AccessLevel;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
@@ -13,7 +17,7 @@ public class OrderProduct {
     @Column(name = "order_proudct_id")
     private Long id;
 
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Order order;
 
     @ManyToOne(optional = false)

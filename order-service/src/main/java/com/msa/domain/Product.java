@@ -1,5 +1,6 @@
 package com.msa.domain;
 
+import com.msa.domain.vo.Money;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
