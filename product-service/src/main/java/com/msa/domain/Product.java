@@ -29,6 +29,9 @@ public class Product {
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
 
+    @Column(name = "product_version")
+    private int version=0;
+
     public Product(ProductInfo productInfo) {
         this.id = null;
         this.productInfo = productInfo;

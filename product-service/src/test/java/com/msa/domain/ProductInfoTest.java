@@ -5,7 +5,6 @@ import com.msa.domain.vo.ProductInfo;
 import com.msa.domain.vo.Stock;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-
 import static org.junit.jupiter.api.Assertions.*;
 
 class ProductInfoTest {
@@ -181,36 +180,4 @@ class ProductInfoTest {
         assertTrue(product.getProductInfo().getCurrentStock().getCount() == 0);
     }
 
-
-
-//    @Test
-//    @DisplayName("동시 주문 결과 확인")
-//    void checkCoincidentOrder() throws InterruptedException {
-//        Product product = createProduct();
-//        product.editProductStockInfo(100);
-//
-//        /**
-//         * 테스트 해보고 싶은것
-//         * a가 orderProduct 호출 -> 매서드 진입 후 잠깐 sleep
-//         * 이 때 b가 orderProduct호출하여 남은 재고가 0
-//         * 이 후 a가 깨어나 다시진행하면??
-//         * a는 재고가 남아있다고 확인했으니 그대로 수행할텐데
-//         * */
-//        new Thread(() -> {
-//            for (int i = 0; i < 20; i++) {
-//                product.orderProduct(1);
-//            }
-//        }).start();
-//
-//        new Thread(() -> {
-//            for (int i = 0; i < 20; i++) {
-//                product.orderProduct(1);
-//            }
-//        }).start();
-//
-//
-//
-//        Thread.sleep(10000); // 5s
-//        System.out.println(product.getProductInfo().getCurrentStock().getCount());
-//    }
 }
