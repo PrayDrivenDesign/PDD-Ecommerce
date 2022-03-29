@@ -23,4 +23,19 @@ public class ProductInfo {
 
     @Embedded
     private Stock currentStock;
+
+    public void editPrice(Money newPrice) {
+        this.price = newPrice;
+    }
+
+    public void editStockCount(Stock newStock) {
+        this.currentStock = newStock;
+    }
+
+    public void reduceStock(int counts) {
+        this.currentStock = new Stock(currentStock.getCount() - counts);
+        if (currentStock.getCount() < 0) {
+            throw new IllegalArgumentException("재고가 음수가 되는 경우 발생!!");
+        }
+    }
 }

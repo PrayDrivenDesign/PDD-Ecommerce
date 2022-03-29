@@ -1,18 +1,23 @@
 package com.msa.domain;
 
+import com.msa.domain.vo.Money;
 import com.msa.domain.vo.ProductInfo;
+import com.msa.domain.vo.Stock;
 import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
 @Getter
 @Table(name = "products")
+@EntityListeners(AuditingEntityListener.class)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@AllArgsConstructor
 public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -24,10 +29,45 @@ public class Product {
     private ProductInfo productInfo;
 
     @Column(name = "created_at")
+    @CreatedDate
     private LocalDateTime createdAt;
 
     @Column(name = "updated_at")
+    @LastModifiedDate
     private LocalDateTime updatedAt;
+
+    @Version
+    @Column(name = "product_version")
+    private int version=0;
+
+    public Product(ProductInfo productInfo) {
+        this.productInfo = productInfo;
+    }
+
+    // 상품 등록자의 가격 수정
+    public void editProductPriceInfo(int newPrice) {
+        this.productInfo.editPrice(new Money(newPrice));
+    }
+
+    // 상품 등록자의 재고 수정 - 재고는 음수일 수 없다
+    public void editProductStockInfo(int newStockCount) {
+        this.productInfo.editStockCount(new Stock(newStockCount));
+    }
+
+    //남은 재고 검증 - 주문할 수 있는 n개의 재고가 남아있는지 확인
+    public boolean checkUsableStock(int orderedProductCount) {
+        return this.productInfo.getCurrentStock().getCount() >= orderedProductCount;
+    }
+
+    //주문을 통한 재고 감소
+    public void orderProduct(int counts) {
+        // order에서 먼저 남은 재고 검증(checkUsableStock)을 통해 주문 -> 동시적으로 주문이 일어난 경우를 대비해 주문 처리할 때 한번 더 검증
+        int remainingStock = this.productInfo.getCurrentStock().getCount();
+        if (remainingStock < counts) {
+            throw new IllegalArgumentException("현재 남은 재고가 주문량보다 적습니다.");
+        }
+        this.productInfo.reduceStock(counts);
+    }
 
 }
 
