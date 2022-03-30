@@ -1,15 +1,12 @@
 package com.msa.domain;
 
-import com.msa.domain.vo.Money;
 import com.msa.domain.vo.ProductInfo;
-import com.msa.domain.vo.Stock;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
-
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
@@ -40,18 +37,18 @@ public class Product {
     @Column(name = "product_version")
     private int version=0;
 
-    public Product(ProductInfo productInfo) {
-        this.productInfo = productInfo;
+    public Product(String name, int priceValue, int stockValue) {
+        this.productInfo = new ProductInfo(name, priceValue, stockValue);
     }
 
     // 상품 등록자의 가격 수정
     public void editProductPriceInfo(int newPrice) {
-        this.productInfo.editPrice(new Money(newPrice));
+        this.productInfo.editPrice(newPrice);
     }
 
     // 상품 등록자의 재고 수정 - 재고는 음수일 수 없다
     public void editProductStockInfo(int newStockCount) {
-        this.productInfo.editStockCount(new Stock(newStockCount));
+        this.productInfo.editStockCount(newStockCount);
     }
 
     //남은 재고 검증 - 주문할 수 있는 n개의 재고가 남아있는지 확인

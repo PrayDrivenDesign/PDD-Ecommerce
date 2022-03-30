@@ -1,8 +1,5 @@
 package com.msa.domain;
 
-import com.msa.domain.vo.Money;
-import com.msa.domain.vo.ProductInfo;
-import com.msa.domain.vo.Stock;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
@@ -10,15 +7,10 @@ import static org.junit.jupiter.api.Assertions.*;
 class ProductInfoTest {
     Product createProduct() {
         String productName = "clock";
-
         int productStockCount = 100;
-        Stock productStock = new Stock(productStockCount);
-
         int productPriceValue = 100000;
-        Money productPrice = new Money(productPriceValue);
 
-        ProductInfo productInfo = new ProductInfo(productName, productPrice, productStock);
-        Product originProduct = new Product(productInfo);
+        Product originProduct = new Product(productName,productPriceValue,productStockCount);
 
         return originProduct;
     }
