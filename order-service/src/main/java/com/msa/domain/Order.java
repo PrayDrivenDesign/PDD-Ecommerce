@@ -2,7 +2,6 @@ package com.msa.domain;
 
 import com.msa.domain.vo.Money;
 import lombok.AccessLevel;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.CreatedDate;
@@ -37,13 +36,9 @@ public class Order {
     @LastModifiedDate
     private LocalDateTime updatedAt = null;
 
-    @Builder
-    public Order(List<OrderProduct> productList) {
-        addProducts(productList);
-    }
-
-    private void addProducts(List<OrderProduct> products) {
-        this.productList = products;
+    @PreUpdate
+    @PrePersist
+    private void updateTotalPrice(List<OrderProduct> products) {
         Money price = calculateTotalPrice(this.productList);
         updateTotalPrice(price);
     }
