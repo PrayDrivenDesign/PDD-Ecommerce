@@ -36,21 +36,8 @@ public class Order {
     @LastModifiedDate
     private LocalDateTime updatedAt = null;
 
-    @PreUpdate
-    @PrePersist
-    private void updateTotalPrice(List<OrderProduct> products) {
-        Money price = calculateTotalPrice(this.productList);
-        updateTotalPrice(price);
-    }
-
-    private Money calculateTotalPrice(List<OrderProduct> products) {
-        int totalPrice = products.stream()
-                .map(OrderProduct::getPrice)
-                .map(Money::getValue).reduce(0, Integer::sum);
-        return new Money(totalPrice);
-    }
-
-    public void updateTotalPrice(Money price) {
-        this.price = price;
+    public void addTotalPrice(Money price) {
+        int value = this.price.getValue() + price.getValue();
+        this.price = new Money(value);
     }
 }

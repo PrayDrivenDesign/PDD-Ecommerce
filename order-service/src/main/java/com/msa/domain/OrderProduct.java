@@ -42,6 +42,7 @@ public class OrderProduct {
     public void addOrder(Order order) {
         this.order = order;
         this.order.getProductList().add(this);
+        this.order.addTotalPrice(this.price);
     }
 
     public Money calculateTotalPrice() {
