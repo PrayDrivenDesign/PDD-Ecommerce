@@ -31,10 +31,18 @@ public class OrderProduct {
 
     @Builder
     public OrderProduct(Order order, Product product, int count) {
-        this.order = order;
+        if (count <= 0)
+            throw new IllegalArgumentException("수량은 0보다 커야 합니다.");
+        addOrder(order);
         this.product = product;
         this.count = count;
         this.price = calculateTotalPrice();
+    }
+
+    public void addOrder(Order order) {
+        this.order = order;
+        this.order.getProductList().add(this);
+        this.order.addTotalPrice(this.price);
     }
 
     public Money calculateTotalPrice() {
