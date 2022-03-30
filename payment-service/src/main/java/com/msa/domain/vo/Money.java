@@ -2,6 +2,7 @@ package com.msa.domain.vo;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
 
@@ -9,7 +10,7 @@ import javax.persistence.Embeddable;
 @Embeddable
 @NoArgsConstructor
 public class Money {
-    @Column(name = "product_price",nullable = false)
+    @Column(name = "payment_price",nullable = false)
     private int value;
 
     public Money(int value) {
