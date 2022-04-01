@@ -11,7 +11,7 @@ import java.util.stream.Collectors;
 public enum PaymentMethod {
     CARD;
 
-    private static final Set<String> paymentMethodSet = Arrays.stream(PaymentMethod.values()).map(PaymentMethod::toString).collect(Collectors.toSet());
+    private static final Set<String> paymentMethodSet = Arrays.stream(PaymentMethod.values()).map(PaymentMethod::toString).collect(Collectors.toCollection(HashSet::new));
 
 
     public static void verifyIfUsable(String paymentMethod) {

@@ -7,7 +7,7 @@ public enum PaymentVendor {
     KAKAO_PAY,
     TOSS;
 
-    private static final Set<String> paymentVendorSet = Arrays.stream(PaymentVendor.values()).map(PaymentVendor::toString).collect(Collectors.toSet());
+    private static final Set<String> paymentVendorSet = Arrays.stream(PaymentVendor.values()).map(PaymentVendor::toString).collect(Collectors.toCollection(HashSet::new));
 
     public static void verifyIfUsable(String paymentVendor) {
         String target = paymentVendor.toUpperCase(Locale.ROOT);
