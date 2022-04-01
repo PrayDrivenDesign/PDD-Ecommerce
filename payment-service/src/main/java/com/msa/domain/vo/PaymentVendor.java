@@ -1,22 +1,17 @@
 package com.msa.domain.vo;
 
-import java.util.Collections;
-import java.util.Locale;
-import java.util.Map;
-import java.util.function.Function;
+import java.util.*;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 public enum PaymentVendor {
     KAKAO_PAY,
     TOSS;
 
-    private static final Map<String, PaymentVendor> paymentVendorMap =
-            Collections.unmodifiableMap(Stream.of(values()) .collect(Collectors.toMap(PaymentVendor::toString, Function.identity())));
-    
+    private static final Set<String> paymentVendorSet = Arrays.stream(PaymentVendor.values()).map(PaymentVendor::toString).collect(Collectors.toSet());
+
     public static void verifyIfUsable(String paymentVendor) {
         String target = paymentVendor.toUpperCase(Locale.ROOT);
-        if (!paymentVendorMap.containsKey(target)) {
+        if (!paymentVendorSet.contains(target)) {
             throw new IllegalArgumentException("지원하지 않는 결제 방법입니다.");
         }
     }
