@@ -4,7 +4,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
-class ProductInfoTest {
+class ProductTest {
     Product createProduct() {
         String productName = "clock";
         int productStockCount = 100;
