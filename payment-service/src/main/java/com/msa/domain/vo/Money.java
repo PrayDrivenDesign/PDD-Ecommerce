@@ -1,5 +1,6 @@
 package com.msa.domain.vo;
 
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -9,6 +10,7 @@ import javax.persistence.Embeddable;
 @Getter
 @Embeddable
 @NoArgsConstructor
+@EqualsAndHashCode(of = "value")
 public class Money {
     @Column(name = "payment_price",nullable = false)
     private int value;
