@@ -2,20 +2,22 @@ package com.msa.domain.vo;
 
 import lombok.Getter;
 
-import java.util.Locale;
+import java.util.*;
+import java.util.stream.Collectors;
+
+
 
 @Getter
 public enum PaymentMethod {
     CARD;
 
+    private static final Set<String> paymentMethodSet = Arrays.stream(PaymentMethod.values()).map(PaymentMethod::toString).collect(Collectors.toCollection(HashSet::new));
+
+
     public static void verifyIfUsable(String paymentMethod) {
-        PaymentMethod[] values = PaymentMethod.values();
         String target = paymentMethod.toUpperCase(Locale.ROOT);
-        for (PaymentMethod method : values) {
-            if (method.toString().equals(target)) {
-                return;
-            }
+        if (!paymentMethodSet.contains(target)) {
+            throw new IllegalArgumentException("지원하지 않는 결제 방법입니다.");
         }
-        throw new IllegalArgumentException("지원하지 않는 결제 방법입니다.");
     }
 }

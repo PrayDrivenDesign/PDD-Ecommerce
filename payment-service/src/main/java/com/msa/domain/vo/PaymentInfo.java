@@ -2,10 +2,12 @@ package com.msa.domain.vo;
 
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.Arrays;
 import java.util.Locale;
 
 @Getter
@@ -31,6 +33,7 @@ public class PaymentInfo {
     @Column(name = "payment_date", nullable = false)
     private LocalDateTime paymentDate;
 
+    @Builder
     public PaymentInfo(Long orderId, int amountValue, String paymentMethod, String paymentVendor) {
         this.orderId = orderId;
         this.amounts = new Money(amountValue);
