@@ -1,6 +1,7 @@
 package com.msa.domain.vo;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import javax.persistence.Column;
@@ -22,6 +23,7 @@ public class ProductInfo {
     @Embedded
     private Stock currentStock;
 
+    @Builder
     public ProductInfo(String name, int price, int currentStock) {
         this.name = name;
         this.price = new Money(price);

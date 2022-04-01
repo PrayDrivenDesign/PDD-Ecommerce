@@ -1,17 +1,19 @@
 package com.msa.domain;
 
+import com.msa.domain.vo.ProductInfo;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 class ProductTest {
     Product createProduct() {
-        String productName = "clock";
-        int productStockCount = 100;
-        int productPriceValue = 100000;
+        ProductInfo productInfo = ProductInfo.builder()
+                .name("clock")
+                .price(100000)
+                .currentStock(100)
+                .build();
 
-        Product originProduct = new Product(productName,productPriceValue,productStockCount);
-
+        Product originProduct = Product.builder().productInfo(productInfo).build();
         return originProduct;
     }
 

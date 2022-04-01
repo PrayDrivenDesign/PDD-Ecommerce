@@ -2,6 +2,7 @@ package com.msa.domain;
 
 import com.msa.domain.vo.ProductInfo;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.CreatedDate;
@@ -37,8 +38,9 @@ public class Product {
     @Column(name = "product_version")
     private int version=0;
 
-    public Product(String name, int priceValue, int stockValue) {
-        this.productInfo = new ProductInfo(name, priceValue, stockValue);
+    @Builder
+    public Product(ProductInfo productInfo) {
+        this.productInfo = productInfo;
     }
 
     // 상품 등록자의 가격 수정
