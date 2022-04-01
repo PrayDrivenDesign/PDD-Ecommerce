@@ -4,6 +4,7 @@ import com.msa.domain.vo.PaymentInfo;
 import com.msa.domain.vo.PaymentMethod;
 import com.msa.domain.vo.PaymentVendor;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.CreatedDate;
@@ -36,7 +37,8 @@ public class Payment {
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
 
-    public Payment(Long orderId, int amountValue, String paymentMethod, String paymentVendor) {
-        this.paymentInfo = new PaymentInfo(orderId, amountValue, paymentMethod, paymentVendor);
+    @Builder
+    public Payment(PaymentInfo paymentInfo) {
+        this.paymentInfo = paymentInfo;
     }
 }
