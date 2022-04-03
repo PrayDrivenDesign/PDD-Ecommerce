@@ -1,6 +1,7 @@
 package com.msa.domain;
 
 import com.msa.domain.vo.Money;
+import com.msa.domain.vo.OrderStatus;
 import lombok.Getter;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
@@ -28,10 +29,16 @@ public class Order {
     @OneToMany(mappedBy = "order", cascade = CascadeType.REMOVE)
     private List<OrderProduct> productList = new ArrayList<>();
 
+    @Enumerated(EnumType.STRING)
+    @Column(name = "order_status",nullable = false)
+    private OrderStatus orderStatus = OrderStatus.PAYMENT_WAITING;
+
     @CreatedDate
+    @Column(name = "created_at")
     private LocalDateTime createdAt = null;
 
     @LastModifiedDate
+    @Column(name = "updated_at")
     private LocalDateTime updatedAt = null;
 
     public void addTotalPrice(Money price) {

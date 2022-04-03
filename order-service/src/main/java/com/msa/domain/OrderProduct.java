@@ -13,10 +13,13 @@ import javax.persistence.*;
 @Table(name = "order_product")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class OrderProduct {
+
     @Id
     @Column(name = "order_proudct_id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @JoinColumn(name = "order_id")
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Order order;
 
