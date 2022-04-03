@@ -1,11 +1,13 @@
 package com.msa.domain.vo;
 
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 
 import javax.persistence.Embeddable;
 
 @Getter
 @Embeddable
+@EqualsAndHashCode(of = "value")
 public class Money {
     private int value;
 
