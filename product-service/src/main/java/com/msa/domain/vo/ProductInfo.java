@@ -1,6 +1,7 @@
 package com.msa.domain.vo;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import javax.persistence.Column;
@@ -22,12 +23,19 @@ public class ProductInfo {
     @Embedded
     private Stock currentStock;
 
-    public void editPrice(Money newPrice) {
-        this.price = newPrice;
+    @Builder
+    public ProductInfo(String name, int price, int currentStock) {
+        this.name = name;
+        this.price = new Money(price);
+        this.currentStock = new Stock(currentStock);
     }
 
-    public void editStockCount(Stock newStock) {
-        this.currentStock = newStock;
+    public void editPrice(int newPriceValue) {
+        this.price = new Money(newPriceValue);
+    }
+
+    public void editStockCount(int newStockValue) {
+        this.currentStock = new Stock(newStockValue);
     }
 
     public void reduceStock(int counts) {
