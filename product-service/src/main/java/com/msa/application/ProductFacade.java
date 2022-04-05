@@ -1,0 +1,28 @@
+package com.msa.application;
+
+import com.msa.application.request.CreateProductRequest;
+import com.msa.domain.Category;
+import com.msa.domain.Product;
+import com.msa.domain.service.CategoryService;
+import com.msa.domain.service.ProductCategoryService;
+import com.msa.domain.service.ProductService;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Component;
+
+import javax.transaction.Transactional;
+
+@Component
+@RequiredArgsConstructor
+public class ProductFacade {
+    private final ProductService productService;
+    private final CategoryService categoryService;
+    private final ProductCategoryService productCategoryService;
+
+    @Transactional
+    public Long createProduct(CreateProductRequest request) {
+        Category category = categoryService.findById(request.getCategoryId());
+        Product product = productService.createProduct(request.getName(),request.getPrice(),request.getStock());
+        productCategoryService.createProductCategory(product,category);
+        return product.getId();
+    }
+}
