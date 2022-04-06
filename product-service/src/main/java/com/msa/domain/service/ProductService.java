@@ -2,17 +2,17 @@ package com.msa.domain.service;
 
 import com.msa.domain.Product;
 import com.msa.domain.repository.ProductRepository;
-import com.msa.domain.vo.Money;
 import com.msa.domain.vo.ProductInfo;
-import com.msa.domain.vo.Stock;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
 public class ProductService {
     private final ProductRepository productRepository;
 
+    @Transactional
     public Product createProduct(String name, int price, int stock) {
         ProductInfo productInfo = ProductInfo.builder()
                 .name(name)

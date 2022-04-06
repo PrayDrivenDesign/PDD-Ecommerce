@@ -9,7 +9,6 @@ import com.msa.domain.service.ProductService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
-import javax.transaction.Transactional;
 
 @Component
 @RequiredArgsConstructor
@@ -18,7 +17,6 @@ public class ProductFacade {
     private final CategoryService categoryService;
     private final ProductCategoryService productCategoryService;
 
-    @Transactional
     public Long createProduct(CreateProductRequest request) {
         Category category = categoryService.findById(request.getCategoryId());
         Product product = productService.createProduct(request.getName(),request.getPrice(),request.getStock());
