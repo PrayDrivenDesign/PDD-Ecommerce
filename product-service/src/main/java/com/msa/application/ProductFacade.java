@@ -1,6 +1,6 @@
 package com.msa.application;
 
-import com.msa.application.request.CreateProductRequest;
+import com.msa.application.dtos.Requests;
 import com.msa.domain.Category;
 import com.msa.domain.Product;
 import com.msa.domain.service.CategoryService;
@@ -17,7 +17,7 @@ public class ProductFacade {
     private final CategoryService categoryService;
     private final ProductCategoryService productCategoryService;
 
-    public Long createProduct(CreateProductRequest request) {
+    public Long createProduct(Requests.CreateProductRequest request) {
         Category category = categoryService.findById(request.getCategoryId());
         Product product = productService.createProduct(request.getName(),request.getPrice(),request.getStock());
         productCategoryService.createProductCategory(product,category);

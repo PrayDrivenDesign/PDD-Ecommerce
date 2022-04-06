@@ -1,7 +1,8 @@
 package com.msa.presentation.controller;
 
 import com.msa.application.ProductFacade;
-import com.msa.application.request.CreateProductRequest;
+
+import com.msa.application.dtos.Requests;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,7 +17,7 @@ public class ProductController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public ResponseEntity createProduct(@RequestBody @Valid CreateProductRequest request) {
+    public ResponseEntity createProduct(@RequestBody @Valid Requests.CreateProductRequest request) {
         Long productId = productFacade.createProduct(request);
         return ResponseEntity.ok().body(productId);
     }

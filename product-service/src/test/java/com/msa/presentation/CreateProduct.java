@@ -2,7 +2,7 @@ package com.msa.presentation;
 
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.msa.application.request.CreateProductRequest;
+import com.msa.application.dtos.Requests;
 import com.msa.domain.Category;
 import com.msa.presentation.factory.ProductFactory;
 import org.junit.jupiter.api.DisplayName;
@@ -33,7 +33,7 @@ public class CreateProduct {
     @DisplayName("상품 생성 - 성공")
     void createProduct() throws Exception {
         Category category = productFactory.createMockCategory();
-        CreateProductRequest request = productFactory.createProductRequest("clock", 10000, 100, category.getId());
+        Requests.CreateProductRequest request = productFactory.createProductRequest("clock", 10000, 100, category.getId());
 
         mockMvc.perform(post("/products")
                         .contentType(MediaType.APPLICATION_JSON)
@@ -47,7 +47,7 @@ public class CreateProduct {
     @DisplayName("상품 생성 - 성공 / 무료 상품을 대비한 0원의 상품도 가능")
     void createProductWithZeroPrice() throws Exception {
         Category category = productFactory.createMockCategory();
-        CreateProductRequest request = productFactory.createProductRequest("clock", 0, 100, category.getId());
+        Requests.CreateProductRequest request = productFactory.createProductRequest("clock", 0, 100, category.getId());
 
         mockMvc.perform(post("/products")
                         .contentType(MediaType.APPLICATION_JSON)
@@ -61,7 +61,7 @@ public class CreateProduct {
     @DisplayName("상품 생성 - 실패 / 가격은 0원 이상이어야한다")
     void failToCreateProductWithPrice() throws Exception{
         Category category = productFactory.createMockCategory();
-        CreateProductRequest request = productFactory.createProductRequest("clock", -1, 100, category.getId());
+        Requests.CreateProductRequest request = productFactory.createProductRequest("clock", -1, 100, category.getId());
 
         mockMvc.perform(post("/products")
                         .contentType(MediaType.APPLICATION_JSON)
@@ -77,7 +77,7 @@ public class CreateProduct {
     @DisplayName("상품 생성 - 실패 / 초기 재고는 0개 이상이어야한다.")
     void failToCreateProductWithStock() throws Exception{
         Category category = productFactory.createMockCategory();
-        CreateProductRequest request = productFactory.createProductRequest("clock", 100, -1, category.getId());
+        Requests.CreateProductRequest request = productFactory.createProductRequest("clock", 100, -1, category.getId());
 
         mockMvc.perform(post("/products")
                         .contentType(MediaType.APPLICATION_JSON)
@@ -92,7 +92,7 @@ public class CreateProduct {
     @Test
     @DisplayName("상품 생성 - 실패 / 존재하지 않는 카테고리")
     void failToCreateProductWithCategory() throws Exception{
-        CreateProductRequest request = productFactory.createProductRequest("clock", 100, 100, -1L);
+        Requests.CreateProductRequest request = productFactory.createProductRequest("clock", 100, 100, -1L);
 
         mockMvc.perform(post("/products")
                         .contentType(MediaType.APPLICATION_JSON)
@@ -107,7 +107,7 @@ public class CreateProduct {
     @Test
     @DisplayName("상품 생성 - 실패 / 상품 이름은 비어있을 수 없다.")
     void failToCreateProductWithInvalidName() throws Exception{
-        CreateProductRequest request = productFactory.createProductRequest(" ", 100, 100, -1L);
+        Requests.CreateProductRequest request = productFactory.createProductRequest(" ", 100, 100, -1L);
 
         mockMvc.perform(post("/products")
                         .contentType(MediaType.APPLICATION_JSON)
@@ -122,7 +122,7 @@ public class CreateProduct {
     @Test
     @DisplayName("상품 생성 - 실패 / 상품 이름은 공백일 수 없다.")
     void failToCreateProductWithEmptyName() throws Exception{
-        CreateProductRequest request = productFactory.createProductRequest("", 100, 100, -1L);
+        Requests.CreateProductRequest request = productFactory.createProductRequest("", 100, 100, -1L);
 
         mockMvc.perform(post("/products")
                         .contentType(MediaType.APPLICATION_JSON)
@@ -137,7 +137,7 @@ public class CreateProduct {
     @Test
     @DisplayName("상품 생성 - 실패 / 상품 이름은 null일 수 없다.")
     void failToCreateProductWithNullName() throws Exception{
-        CreateProductRequest request = productFactory.createProductRequest(null, 100, 100, -1L);
+        Requests.CreateProductRequest request = productFactory.createProductRequest(null, 100, 100, -1L);
 
         mockMvc.perform(post("/products")
                         .contentType(MediaType.APPLICATION_JSON)
@@ -152,7 +152,7 @@ public class CreateProduct {
     @Test
     @DisplayName("상품 생성 - 실패 / 상품 가격은 null일 수 없다.")
     void failToCreateProductWithNullPrice() throws Exception{
-        CreateProductRequest request = productFactory.createProductRequest("clock", null, 100, -1L);
+        Requests.CreateProductRequest request = productFactory.createProductRequest("clock", null, 100, -1L);
 
         mockMvc.perform(post("/products")
                         .contentType(MediaType.APPLICATION_JSON)
@@ -167,7 +167,7 @@ public class CreateProduct {
     @Test
     @DisplayName("상품 생성 - 실패 / 상품 재고는 null일 수 없다.")
     void failToCreateProductWithNullStock() throws Exception{
-        CreateProductRequest request = productFactory.createProductRequest("clock", 10000, null, -1L);
+        Requests.CreateProductRequest request = productFactory.createProductRequest("clock", 10000, null, -1L);
 
         mockMvc.perform(post("/products")
                         .contentType(MediaType.APPLICATION_JSON)
@@ -182,7 +182,7 @@ public class CreateProduct {
     @Test
     @DisplayName("상품 생성 - 실패 / 상품 카테고리는 null일 수 없다.")
     void failToCreateProductWithNullCategory() throws Exception{
-        CreateProductRequest request = productFactory.createProductRequest("clock", 10000, 100, null);
+        Requests.CreateProductRequest request = productFactory.createProductRequest("clock", 10000, 100, null);
 
         mockMvc.perform(post("/products")
                         .contentType(MediaType.APPLICATION_JSON)

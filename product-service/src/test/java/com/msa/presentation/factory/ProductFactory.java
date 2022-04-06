@@ -1,6 +1,6 @@
 package com.msa.presentation.factory;
 
-import com.msa.application.request.CreateProductRequest;
+import com.msa.application.dtos.Requests;
 import com.msa.domain.Category;
 import com.msa.domain.repository.CategoryRepository;
 import com.msa.domain.repository.ProductCategoryRepository;
@@ -27,7 +27,7 @@ public class ProductFactory {
         return categoryRepository.save(category);
     }
 
-    public CreateProductRequest createProductRequest(String name, Integer price, Integer stock, Long categoryId) {
-        return new CreateProductRequest(name, price, stock, categoryId);
+    public Requests.CreateProductRequest createProductRequest(String name, Integer price, Integer stock, Long categoryId) {
+        return new Requests.CreateProductRequest(name, price, stock, categoryId);
     }
 }
