@@ -16,4 +16,9 @@ public class ProductRepositoryAdapter implements ProductRepository {
     public Product save(Product product) {
         return jpaProductRepository.save(product);
     }
+
+    @Override
+    public Product findById(Long productId) {
+        return jpaProductRepository.findById(productId).orElseThrow(() -> new IllegalArgumentException("해당 상품이 존재하지 않습니다."));
+    }
 }

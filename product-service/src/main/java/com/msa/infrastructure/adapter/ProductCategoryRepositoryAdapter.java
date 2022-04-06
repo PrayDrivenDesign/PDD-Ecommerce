@@ -13,7 +13,12 @@ public class ProductCategoryRepositoryAdapter implements ProductCategoryReposito
 
 
     @Override
-    public void save(ProductCategory productCategory) {
-        jpaProductCategoryRepository.save(productCategory);
+    public ProductCategory save(ProductCategory productCategory) {
+        return jpaProductCategoryRepository.save(productCategory);
+    }
+
+    @Override
+    public ProductCategory findById(Long id) {
+        return jpaProductCategoryRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("해당 productCategory가 존재하지 않습니다."));
     }
 }

@@ -14,12 +14,12 @@ public class ProductCategoryService {
     private final ProductCategoryRepository productCategoryRepository;
 
     @Transactional
-    public void createProductCategory(Product product, Category category) {
+    public ProductCategory createProductCategory(Product product, Category category) {
         ProductCategory productCategory = ProductCategory.builder()
                 .product(product)
                 .category(category)
                 .build();
 
-        productCategoryRepository.save(productCategory);
+        return productCategoryRepository.save(productCategory);
     }
 }
