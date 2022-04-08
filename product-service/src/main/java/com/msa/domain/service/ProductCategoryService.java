@@ -5,10 +5,10 @@ import com.msa.domain.Product;
 import com.msa.domain.ProductCategory;
 import com.msa.domain.repository.ProductCategoryRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-@Service
+@Component
 @RequiredArgsConstructor
 public class ProductCategoryService {
     private final ProductCategoryRepository productCategoryRepository;
