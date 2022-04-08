@@ -31,6 +31,5 @@ public class ProductFacade {
     public void updateProduct(Long productId, Requests.UpdateProductRequest request) {
         Product originProduct = productService.findById(productId);
         productService.updateProduct(originProduct, request.getName(), request.getPrice(), request.getStock());
-        //todo send event to order aggregate
     }
 }
