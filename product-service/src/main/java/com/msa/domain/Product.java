@@ -53,6 +53,11 @@ public class Product {
         this.productInfo.editStockCount(newStockCount);
     }
 
+    // 상품 등록자의 상품명 수정
+    public void editProductNameInfo(String newName) {
+        this.productInfo.editName(newName);
+    }
+
     //남은 재고 검증 - 주문할 수 있는 n개의 재고가 남아있는지 확인
     public boolean checkUsableStock(int orderedProductCount) {
         return this.productInfo.getCurrentStock().getCount() >= orderedProductCount;
