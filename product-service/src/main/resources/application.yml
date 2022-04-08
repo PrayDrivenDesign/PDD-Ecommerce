@@ -1,9 +1,11 @@
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3308/pdd
-    password: kiseok
-    username: kiseok
+    url: ${PRODUCT_DATABASE_URL}
+    password: ${PRODUCT_DATABASE_PASSWORD}
+    username: ${PRODUCT_DATABASE_USERNAME}
+  kafka:
+    bootstrap-servers: ${KAFKA_SERVER_URL}
   jpa:
     hibernate:
       ddl-auto: create-drop
