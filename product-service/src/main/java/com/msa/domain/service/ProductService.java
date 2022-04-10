@@ -38,7 +38,8 @@ public class ProductService {
     }
 
     @Transactional
-    public void updateProduct(Product originProduct, String name, Integer price, Integer stock) {
+    public void updateProduct(Long productId, String name, Integer price, Integer stock) {
+        Product originProduct = productRepository.findById(productId);
         originProduct.editProductNameInfo(name);
         originProduct.editProductPriceInfo(price);
         originProduct.editProductStockInfo(stock);
