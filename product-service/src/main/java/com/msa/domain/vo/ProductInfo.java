@@ -38,6 +38,10 @@ public class ProductInfo {
         this.currentStock = new Stock(newStockValue);
     }
 
+    public void editName(String newName) {
+        this.name = newName;
+    }
+
     public void reduceStock(int counts) {
         this.currentStock = new Stock(currentStock.getCount() - counts);
         if (currentStock.getCount() < 0) {

@@ -21,4 +21,11 @@ public class ProductController {
         Long productId = productFacade.createProduct(request);
         return ResponseEntity.ok().body(productId);
     }
+
+    @PutMapping("/{productId}")
+    @ResponseStatus(HttpStatus.OK)
+    public ResponseEntity updateProduct(@PathVariable Long productId, @RequestBody @Valid Requests.UpdateProductRequest request) {
+        productFacade.updateProduct(productId, request);
+        return ResponseEntity.ok().body(productId);
+    }
 }

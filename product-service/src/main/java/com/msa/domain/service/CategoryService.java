@@ -3,10 +3,11 @@ package com.msa.domain.service;
 import com.msa.domain.Category;
 import com.msa.domain.repository.CategoryRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-@Service
+
+@Component
 @RequiredArgsConstructor
 public class CategoryService {
     private final CategoryRepository categoryRepository;
