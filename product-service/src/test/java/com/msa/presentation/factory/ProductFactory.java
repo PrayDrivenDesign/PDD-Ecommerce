@@ -46,4 +46,8 @@ public class ProductFactory {
     public Requests.UpdateProductRequest updateProductRequest(String name, Integer price, Integer stock) {
         return new Requests.UpdateProductRequest(name, price, stock);
     }
+
+    public Requests.CreateCategoryRequest createCategoryRequest(String name) {
+        return new Requests.CreateCategoryRequest(name);
+    }
 }
