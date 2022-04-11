@@ -16,4 +16,13 @@ public class CategoryService {
     public Category findById(Long categoryId) {
         return categoryRepository.findById(categoryId);
     }
+
+    @Transactional
+    public Category createCategory(String categoryName) {
+        if (categoryRepository.existsByName(categoryName)) {
+            throw new IllegalArgumentException("이미 존재하는 카테고리입니다.");
+        }
+        Category category = Category.builder().categoryName(categoryName).build();
+        return categoryRepository.save(category);
+    }
 }

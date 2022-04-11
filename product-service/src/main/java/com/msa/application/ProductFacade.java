@@ -32,4 +32,9 @@ public class ProductFacade {
     public void updateProduct(Long productId, Requests.UpdateProductRequest request) {
         productService.updateProduct(productId, request.getName(), request.getPrice(), request.getStock());
     }
+
+    @Transactional
+    public Long createCategory(String name) {
+        return categoryService.createCategory(name).getId();
+    }
 }
