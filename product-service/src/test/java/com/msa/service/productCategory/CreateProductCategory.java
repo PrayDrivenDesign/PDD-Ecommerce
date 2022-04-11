@@ -16,6 +16,7 @@ import org.springframework.test.util.ReflectionTestUtils;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
+import static org.mockito.Mockito.verify;
 
 
 public class CreateProductCategory extends ProductCategoryBase {
@@ -42,18 +43,10 @@ public class CreateProductCategory extends ProductCategoryBase {
         Long fakeId = -1L;
         ReflectionTestUtils.setField(productCategory, "id", fakeId);
 
-        given(productCategoryRepository.save(any())).willReturn(productCategory);
-        given(productCategoryRepository.findById(fakeId)).willReturn(productCategory);
-
-
         //when
         ProductCategory result = productCategoryService.createProductCategory(product, category);
 
         //then
-        ProductCategory found = productCategoryRepository.findById(result.getId());
-        assertTrue(found.getId() == result.getId());
-        assertTrue(found.getCategory().getName().equals(result.getCategory().getName()));
-        assertTrue(found.getProduct().getProductInfo().getName().equals(result.getProduct().getProductInfo().getName()));
-
+        verify(productCategoryRepository).save(any());
     }
 }
