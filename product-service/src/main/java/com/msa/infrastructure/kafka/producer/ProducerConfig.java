@@ -1,6 +1,6 @@
 package com.msa.infrastructure.kafka.producer;
 
-import com.msa.infrastructure.kafka.Message;
+import com.msa.infrastructure.kafka.Events;
 import org.apache.kafka.common.serialization.StringSerializer;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -20,7 +20,7 @@ public class ProducerConfig {
     private String bootStrapServers;
 
     @Bean
-    public ProducerFactory<String, Message.CreateProductRequest> createdEventProducerFactory() {
+    public ProducerFactory<String, Events.ProductCreatedEvent> createdEventProducerFactory() {
         Map<String,Object> configs = new HashMap<>();
         configs.put(org.apache.kafka.clients.producer.ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, bootStrapServers);
         configs.put(org.apache.kafka.clients.producer.ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
@@ -29,7 +29,7 @@ public class ProducerConfig {
     }
 
     @Bean
-    public ProducerFactory<String, Message.UpdateProductRequest> updatedEventProducerFactory() {
+    public ProducerFactory<String, Events.ProductUpdatedEvent> updatedEventProducerFactory() {
         Map<String,Object> configs = new HashMap<>();
         configs.put(org.apache.kafka.clients.producer.ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, bootStrapServers);
         configs.put(org.apache.kafka.clients.producer.ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
@@ -38,12 +38,12 @@ public class ProducerConfig {
     }
 
     @Bean
-    public KafkaTemplate<String, Message.CreateProductRequest> kafkaTemplateForCreatedEvent() {
+    public KafkaTemplate<String, Events.ProductCreatedEvent> kafkaTemplateForCreatedEvent() {
         return new KafkaTemplate<>(createdEventProducerFactory());
     }
 
     @Bean
-    public KafkaTemplate<String, Message.UpdateProductRequest> kafkaTemplateForUpdatedEvent() {
+    public KafkaTemplate<String, Events.ProductUpdatedEvent> kafkaTemplateForUpdatedEvent() {
         return new KafkaTemplate<>(updatedEventProducerFactory());
     }
 }

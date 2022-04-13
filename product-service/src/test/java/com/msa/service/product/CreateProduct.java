@@ -4,7 +4,7 @@ import com.msa.domain.Product;
 import com.msa.domain.repository.ProductRepository;
 import com.msa.domain.service.ProductService;
 import com.msa.domain.vo.ProductInfo;
-import com.msa.infrastructure.kafka.Message;
+import com.msa.infrastructure.kafka.Events;
 import com.msa.infrastructure.kafka.producer.ProductEventProducer;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -25,9 +25,9 @@ public class CreateProduct extends ProductBase{
     @Mock
     ProductRepository productRepository;
     @Mock
-    KafkaTemplate<String, Message.CreateProductRequest> createdEventTemplate;
+    KafkaTemplate<String, Events.ProductCreatedEvent> createdEventTemplate;
     @Mock
-    KafkaTemplate<String, Message.UpdateProductRequest> updatedEventTemplate;
+    KafkaTemplate<String, Events.ProductUpdatedEvent> updatedEventTemplate;
     @Mock
     ProductEventProducer producer;
     @InjectMocks
