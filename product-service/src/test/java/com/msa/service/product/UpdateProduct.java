@@ -4,30 +4,20 @@ import com.msa.domain.Product;
 import com.msa.domain.repository.ProductRepository;
 import com.msa.domain.service.ProductService;
 import com.msa.domain.vo.ProductInfo;
-import com.msa.infrastructure.kafka.Events;
-import com.msa.infrastructure.kafka.producer.ProductEventProducer;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
-import org.mockito.Mock;
 import org.mockito.Spy;
-import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.transaction.annotation.Transactional;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.BDDMockito.given;
 
 @Transactional
 public class UpdateProduct extends ProductBase{
     @Spy
     ProductRepository productRepository;
-    @Mock
-    KafkaTemplate<String, Events.ProductCreatedEvent> createdEventTemplate;
-    @Mock
-    KafkaTemplate<String, Events.ProductUpdatedEvent> updatedEventTemplate;
-    @Mock
-    ProductEventProducer producer;
     @InjectMocks
     ProductService productService;
 
