@@ -5,11 +5,14 @@ import com.msa.domain.service.ProductService;
 import com.msa.infrastructure.kafka.Events;
 import com.msa.kafka.Topics;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.kafka.core.KafkaTemplate;
+import org.springframework.orm.ObjectOptimisticLockingFailureException;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
+@Slf4j
 @Component
 @RequiredArgsConstructor
 public class EventUseCaseImpl implements EventUseCase {
@@ -34,6 +37,10 @@ public class EventUseCaseImpl implements EventUseCase {
     @KafkaListener(topics = "orderCompletedEvent", groupId = "product", containerFactory = "orderCompletedEventListener")
     public void consumeOrderCompletedEvent(Events.OrderCompletedEvent event) {
         Product product = productService.findById(event.getProductId());
-        product.orderProduct(event.getOrderedProductCount());
+        try {
+            product.orderProduct(event.getOrderedProductCount());
+        } catch (ObjectOptimisticLockingFailureException e) {
+            log.error("동시 접근으로인한 재고 수정 실패");
+        }
     }
 }

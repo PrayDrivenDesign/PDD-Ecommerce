@@ -40,4 +40,8 @@ public class ProductService {
 
         return originProduct;
     }
+
+    public void save(Product product) {
+        productRepository.save(product);
+    }
 }
