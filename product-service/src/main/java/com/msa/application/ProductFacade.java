@@ -1,6 +1,7 @@
 package com.msa.application;
 
 import com.msa.application.dtos.Requests;
+import com.msa.application.events.EventUseCase;
 import com.msa.domain.Category;
 import com.msa.domain.Product;
 import com.msa.domain.service.CategoryService;
@@ -14,6 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 @RequiredArgsConstructor
 public class ProductFacade {
+    private final EventUseCase eventUseCase;
     private final ProductService productService;
     private final CategoryService categoryService;
     private final ProductCategoryService productCategoryService;
@@ -23,6 +25,7 @@ public class ProductFacade {
         // ㄱㅣ존
         Category category = categoryService.findById(request.getCategoryId());
         Product product = productService.createProduct(request.getName(),request.getPrice(),request.getStock());
+        eventUseCase.sendCreatedEvent(product.getId(),product.getProductInfo().getName(),product.getProductInfo().getPrice().getValue());
         productCategoryService.createProductCategory(product, category);
 
         return product.getId();
@@ -30,7 +33,8 @@ public class ProductFacade {
 
     @Transactional
     public void updateProduct(Long productId, Requests.UpdateProductRequest request) {
-        productService.updateProduct(productId, request.getName(), request.getPrice(), request.getStock());
+        Product updatedProduct = productService.updateProduct(productId, request.getName(), request.getPrice(), request.getStock());
+        eventUseCase.sendUpdatedEvent(updatedProduct.getId(),updatedProduct.getProductInfo().getName(),updatedProduct.getProductInfo().getPrice().getValue());
     }
 
     @Transactional

@@ -28,9 +28,8 @@ public class Events {
     @Getter
     @AllArgsConstructor
     @NoArgsConstructor(access = AccessLevel.PROTECTED)
-    public static class OrderCompleted {
+    public static class OrderCompletedEvent {
         private Long productId;
-        private String name;
-        private int price;
+        private int orderedProductCount;
     }
 }
