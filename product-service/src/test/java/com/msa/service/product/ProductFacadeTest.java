@@ -10,12 +10,10 @@ import com.msa.domain.service.CategoryService;
 import com.msa.domain.service.ProductCategoryService;
 import com.msa.domain.service.ProductService;
 import com.msa.domain.vo.ProductInfo;
-import com.msa.infrastructure.kafka.Events;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.test.util.ReflectionTestUtils;
 import org.springframework.transaction.annotation.Transactional;
 

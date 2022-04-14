@@ -3,7 +3,9 @@ package com.msa.domain.service;
 import com.msa.domain.Product;
 import com.msa.domain.repository.ProductRepository;
 import com.msa.domain.vo.ProductInfo;
+import com.msa.infrastructure.kafka.Events;
 import lombok.RequiredArgsConstructor;
+import org.springframework.orm.ObjectOptimisticLockingFailureException;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -39,6 +41,12 @@ public class ProductService {
         originProduct.editProductStockInfo(stock);
 
         return originProduct;
+    }
+
+    @Transactional
+    public void editProductStock(Events.OrderCompletedEvent event) throws ObjectOptimisticLockingFailureException {
+        Product product = productRepository.findById(event.getProductId());
+        product.orderProduct(event.getOrderedProductCount());
     }
 
     public void save(Product product) {

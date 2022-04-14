@@ -7,11 +7,15 @@ import com.msa.domain.Product;
 import com.msa.domain.service.CategoryService;
 import com.msa.domain.service.ProductCategoryService;
 import com.msa.domain.service.ProductService;
+import com.msa.infrastructure.kafka.Events;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.kafka.annotation.KafkaListener;
+import org.springframework.orm.ObjectOptimisticLockingFailureException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class ProductFacade {
@@ -22,7 +26,6 @@ public class ProductFacade {
 
     @Transactional
     public Long createProduct(Requests.CreateProductRequest request) {
-        // ㄱㅣ존
         Category category = categoryService.findById(request.getCategoryId());
         Product product = productService.createProduct(request.getName(),request.getPrice(),request.getStock());
         eventUseCase.sendCreatedEvent(product.getId(),product.getProductInfo().getName(),product.getProductInfo().getPrice().getValue());
@@ -40,5 +43,14 @@ public class ProductFacade {
     @Transactional
     public Long createCategory(String name) {
         return categoryService.createCategory(name).getId();
+    }
+
+    @KafkaListener(topics = "orderCompletedEvent", groupId = "product", containerFactory = "orderCompletedEventListener")
+    public void consumeOrderCompletedEvent(Events.OrderCompletedEvent event) {
+        try {
+            productService.editProductStock(event);
+        } catch (ObjectOptimisticLockingFailureException e) {
+            log.error("동시 접근으로인한 재고 수정 실패");
+        }
     }
 }
