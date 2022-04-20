@@ -14,10 +14,10 @@ import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.test.util.ReflectionTestUtils;
 import org.springframework.transaction.annotation.Transactional;
 
-import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.BDDMockito.given;
+import static org.mockito.Mockito.verify;
 
 
 @Transactional
@@ -42,20 +42,14 @@ public class CreateProduct extends ProductBase{
         Long fakeProductId = -1L;
         ReflectionTestUtils.setField(product, "id", fakeProductId);
         given(productRepository.save(any())).willReturn(product);
-        given(productRepository.findById(fakeProductId)).willReturn(product);
 
         //when
         Product createdProduct = productService.createProduct(info.getName(),
                 info.getPrice().getValue(), info.getCurrentStock().getCount());
 
         //then
-        Product foundProduct = productRepository.findById(createdProduct.getId());
-
-        assertThat(createdProduct.getId()).isEqualTo(foundProduct.getId());
-        assertThat(createdProduct.getProductInfo().getName()).isEqualTo(foundProduct.getProductInfo().getName());
-        assertThat(createdProduct.getProductInfo().getPrice()).isEqualTo(foundProduct.getProductInfo().getPrice());
-        assertThat(createdProduct.getProductInfo().getCurrentStock()).isEqualTo(foundProduct.getProductInfo().getCurrentStock());
-        assertThat(createdProduct.getVersion()).isEqualTo(0);
+        verify(productRepository).save(any());
+        verify(producer).sendCreatedEvent(anyLong(),anyString(),anyInt());
     }
 
     @Test
@@ -67,20 +61,14 @@ public class CreateProduct extends ProductBase{
         Long fakeProductId = -1L;
         ReflectionTestUtils.setField(product, "id", fakeProductId);
         given(productRepository.save(any())).willReturn(product);
-        given(productRepository.findById(fakeProductId)).willReturn(product);
 
         //when
         Product createdProduct = productService.createProduct(info.getName(),
                 info.getPrice().getValue(), info.getCurrentStock().getCount());
 
         //then
-        Product foundProduct = productRepository.findById(createdProduct.getId());
-
-        assertThat(createdProduct.getId()).isEqualTo(foundProduct.getId());
-        assertThat(createdProduct.getProductInfo().getName()).isEqualTo(foundProduct.getProductInfo().getName());
-        assertThat(createdProduct.getProductInfo().getPrice()).isEqualTo(foundProduct.getProductInfo().getPrice());
-        assertThat(createdProduct.getProductInfo().getCurrentStock()).isEqualTo(foundProduct.getProductInfo().getCurrentStock());
-        assertThat(createdProduct.getVersion()).isEqualTo(0);
+        verify(productRepository).save(any());
+        verify(producer).sendCreatedEvent(anyLong(),anyString(),anyInt());
     }
 
     @Test
@@ -92,20 +80,14 @@ public class CreateProduct extends ProductBase{
         Long fakeProductId = -1L;
         ReflectionTestUtils.setField(product, "id", fakeProductId);
         given(productRepository.save(any())).willReturn(product);
-        given(productRepository.findById(fakeProductId)).willReturn(product);
 
         //when
         Product createdProduct = productService.createProduct(info.getName(),
                 info.getPrice().getValue(), info.getCurrentStock().getCount());
 
         //then
-        Product foundProduct = productRepository.findById(createdProduct.getId());
-
-        assertThat(createdProduct.getId()).isEqualTo(foundProduct.getId());
-        assertThat(createdProduct.getProductInfo().getName()).isEqualTo(foundProduct.getProductInfo().getName());
-        assertThat(createdProduct.getProductInfo().getPrice()).isEqualTo(foundProduct.getProductInfo().getPrice());
-        assertThat(createdProduct.getProductInfo().getCurrentStock()).isEqualTo(foundProduct.getProductInfo().getCurrentStock());
-        assertThat(createdProduct.getVersion()).isEqualTo(0);
+        verify(productRepository).save(any());
+        verify(producer).sendCreatedEvent(anyLong(),anyString(),anyInt());
     }
 
     @Test

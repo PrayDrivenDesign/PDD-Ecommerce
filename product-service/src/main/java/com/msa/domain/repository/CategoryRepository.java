@@ -6,4 +6,6 @@ public interface CategoryRepository {
     Category findById(Long categoryId);
 
     Category save(Category category);
+
+    boolean existsByName(String name);
 }

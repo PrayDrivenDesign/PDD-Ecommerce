@@ -28,4 +28,11 @@ public class ProductController {
         productFacade.updateProduct(productId, request);
         return ResponseEntity.ok().body(productId);
     }
+
+    @PostMapping("/category")
+    @ResponseStatus(HttpStatus.OK)
+    public ResponseEntity createCategory(@RequestBody @Valid Requests.CreateCategoryRequest request) {
+        Long categoryId = productFacade.createCategory(request.getName());
+        return ResponseEntity.ok().body(categoryId);
+    }
 }

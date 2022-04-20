@@ -41,4 +41,11 @@ public class Requests {
         private Integer stock;
     }
 
+    @Getter
+    @AllArgsConstructor
+    @NoArgsConstructor(access = AccessLevel.PROTECTED)
+    public static class CreateCategoryRequest {
+        @NotBlank(message = "유효하지 않은 카테고리 이름입니다. 카테고리 이름을 다시 확인해주세요.")
+        private String name;
+    }
 }

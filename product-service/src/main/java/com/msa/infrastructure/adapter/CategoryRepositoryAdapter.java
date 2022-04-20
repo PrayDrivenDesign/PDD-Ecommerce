@@ -21,4 +21,9 @@ public class CategoryRepositoryAdapter implements CategoryRepository {
     public Category save(Category category) {
         return jpaCategoryRepository.save(category);
     }
+
+    @Override
+    public boolean existsByName(String name) {
+        return jpaCategoryRepository.existsByName(name);
+    }
 }
