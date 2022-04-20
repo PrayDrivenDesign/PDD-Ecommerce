@@ -74,5 +74,11 @@ public class Product {
         this.productInfo.reduceStock(counts);
     }
 
+    public void editProductInfo(String name, Integer price, Integer stock) {
+        //추후에 단일 수정이 필요할수도 있다고 생각해서 매서드 자체는 우선 유지
+        this.editProductNameInfo(name);
+        this.editProductPriceInfo(price);
+        this.editProductStockInfo(stock);
+    }
 }
 
