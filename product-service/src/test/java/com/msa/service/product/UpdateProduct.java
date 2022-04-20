@@ -15,6 +15,8 @@ import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.transaction.annotation.Transactional;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.BDDMockito.given;
 
 @Transactional
 public class UpdateProduct extends ProductBase{
@@ -35,8 +37,9 @@ public class UpdateProduct extends ProductBase{
         //given
         ProductInfo info = createMockProductInfo("originProductName", 100, 100);
         Product product = createMockProduct(info);
+        given(productRepository.findById(any())).willReturn(product);
         //when
-        productService.updateProduct(product, "newName", 1, 1);
+        productService.updateProduct(product.getId(), "newName", 1, 1);
 
         //then
         assertTrue(product.getProductInfo().getName().equals("newName"));
@@ -51,9 +54,10 @@ public class UpdateProduct extends ProductBase{
         //given
         ProductInfo info = createMockProductInfo("originProductName", 100, 100);
         Product product = createMockProduct(info);
+        given(productRepository.findById(any())).willReturn(product);
         //when
         assertThrows(IllegalArgumentException.class, () -> {
-            productService.updateProduct(product, "newName", -1, 1);
+            productService.updateProduct(product.getId(), "newName", -1, 1);
         });
 
     }
@@ -64,9 +68,10 @@ public class UpdateProduct extends ProductBase{
         //given
         ProductInfo info = createMockProductInfo("originProductName", 100, 100);
         Product product = createMockProduct(info);
+        given(productRepository.findById(any())).willReturn(product);
         //when
         assertThrows(IllegalArgumentException.class, () -> {
-            productService.updateProduct(product, "newName", 1, -1);
+            productService.updateProduct(product.getId(), "newName", 1, -1);
         });
     }
 }

@@ -20,16 +20,16 @@ public class ProductFacade {
 
     @Transactional
     public Long createProduct(Requests.CreateProductRequest request) {
+        // ㄱㅣ존
         Category category = categoryService.findById(request.getCategoryId());
         Product product = productService.createProduct(request.getName(),request.getPrice(),request.getStock());
         productCategoryService.createProductCategory(product, category);
-        //todo send event to order aggregate
+
         return product.getId();
     }
 
     @Transactional
     public void updateProduct(Long productId, Requests.UpdateProductRequest request) {
-        Product originProduct = productService.findById(productId);
-        productService.updateProduct(originProduct, request.getName(), request.getPrice(), request.getStock());
+        productService.updateProduct(productId, request.getName(), request.getPrice(), request.getStock());
     }
 }
