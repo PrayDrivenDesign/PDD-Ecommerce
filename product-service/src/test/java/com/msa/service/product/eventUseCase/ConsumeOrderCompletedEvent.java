@@ -1,11 +1,8 @@
 package com.msa.service.product.eventUseCase;
 
-import com.msa.application.ProductFacade;
-import com.msa.application.events.EventUseCase;
+import com.msa.application.events.EventListener;
 import com.msa.domain.Product;
 import com.msa.domain.repository.ProductRepository;
-import com.msa.domain.service.CategoryService;
-import com.msa.domain.service.ProductCategoryService;
 import com.msa.domain.service.ProductService;
 import com.msa.domain.vo.ProductInfo;
 import com.msa.infrastructure.kafka.Events;
@@ -26,13 +23,7 @@ public class ConsumeOrderCompletedEvent {
     @Autowired
     ProductRepository productRepository;
     @Autowired
-    EventUseCase eventUseCase;
-    @Autowired
-    ProductFacade facade;
-    @Autowired
-    CategoryService categoryService;
-    @Autowired
-    ProductCategoryService productCategoryService;
+    EventListener eventListener;
 
 
     @Test
@@ -45,7 +36,7 @@ public class ConsumeOrderCompletedEvent {
 
 
         //when
-        facade.consumeOrderCompletedEvent(event);
+        eventListener.consumeOrderCompletedEvent(event);
 
         //then
         Product targetProduct = productRepository.findById(saved.getId());
@@ -70,7 +61,7 @@ public class ConsumeOrderCompletedEvent {
         for (int i = 0; i < 4; i++) {
             executorService.execute(() -> {
                 try {
-                    facade.consumeOrderCompletedEvent(event);
+                    eventListener.consumeOrderCompletedEvent(event);
                 } catch (ObjectOptimisticLockingFailureException e) {
                     System.out.println("동시 접근 발생!");
                 }
@@ -101,7 +92,7 @@ public class ConsumeOrderCompletedEvent {
         for (int i = 0; i < 4; i++) {
             executorService.execute(() -> {
                 try {
-                    facade.consumeOrderCompletedEvent(event);
+                    eventListener.consumeOrderCompletedEvent(event);
                 } catch (ObjectOptimisticLockingFailureException e) {
                     System.out.println("동시 접근 발생!");
                 }
