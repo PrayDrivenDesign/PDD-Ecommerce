@@ -1,5 +1,6 @@
 package com.msa.domain.vo;
 
+import com.msa.common.ErrorMessages;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -21,7 +22,7 @@ public class Money {
 
     private void verifyValueOfMoney(int value) {
         if (value < 0) {
-            throw new IllegalArgumentException("가격은 0원 이상이어야 합니다.");
+            throw new IllegalArgumentException(ErrorMessages.NOT_VALID_PRICE_EXCEPTION);
         }
     }
 }

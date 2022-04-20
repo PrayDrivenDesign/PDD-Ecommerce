@@ -1,5 +1,6 @@
 package com.msa.domain;
 
+import com.msa.common.ErrorMessages;
 import com.msa.domain.vo.ProductInfo;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -68,7 +69,7 @@ public class Product {
         // order에서 먼저 남은 재고 검증(checkUsableStock)을 통해 주문 -> 동시적으로 주문이 일어난 경우를 대비해 주문 처리할 때 한번 더 검증
         int remainingStock = this.productInfo.getCurrentStock().getCount();
         if (remainingStock < counts) {
-            throw new IllegalArgumentException("현재 남은 재고가 주문량보다 적습니다.");
+            throw new IllegalArgumentException(ErrorMessages.NOT_ENOUGH_STOCK_EXCEPTION);
         }
         this.productInfo.reduceStock(counts);
     }

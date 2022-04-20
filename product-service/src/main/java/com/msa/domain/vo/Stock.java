@@ -1,5 +1,6 @@
 package com.msa.domain.vo;
 
+import com.msa.common.ErrorMessages;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -20,7 +21,7 @@ public class Stock {
 
     private void verifyCountOfStock(int count) {
         if (count < 0) {
-            throw new IllegalArgumentException("재고는 0개 이상이어야합니다.");
+            throw new IllegalArgumentException(ErrorMessages.NOT_VALID_STOCK_EXCEPTION);
         }
     }
 }

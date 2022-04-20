@@ -13,6 +13,9 @@ import org.springframework.kafka.support.serializer.JsonDeserializer;
 import java.util.HashMap;
 import java.util.Map;
 
+import static org.apache.kafka.clients.consumer.ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG;
+import static org.apache.kafka.clients.consumer.ConsumerConfig.GROUP_ID_CONFIG;
+
 @Configuration
 public class ConsumerConfig {
 
@@ -22,8 +25,8 @@ public class ConsumerConfig {
     @Bean
     public ConsumerFactory<String, Events.OrderCompletedEvent> orderCompletedEventConsumerFactory() {
         Map<String, Object> configs = new HashMap<>();
-        configs.put(org.apache.kafka.clients.consumer.ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, bootStrapServers);
-        configs.put(org.apache.kafka.clients.consumer.ConsumerConfig.GROUP_ID_CONFIG, "product");
+        configs.put(BOOTSTRAP_SERVERS_CONFIG, bootStrapServers);
+        configs.put(GROUP_ID_CONFIG, "product");
 
         return new DefaultKafkaConsumerFactory<>(
                 configs,

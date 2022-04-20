@@ -2,6 +2,7 @@ package com.msa.presentation;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.msa.application.dtos.Requests;
+import com.msa.common.ErrorMessages;
 import com.msa.domain.Product;
 import com.msa.presentation.factory.ProductFactory;
 import org.junit.jupiter.api.DisplayName;
@@ -66,7 +67,7 @@ public class UpdateProduct extends ProductFactory{
                         .content(objectMapper.writeValueAsString(request)))
                 .andExpect(status().isBadRequest())
                 .andExpect(jsonPath("status").value(400))
-                .andExpect(jsonPath("message").value("가격은 0원 이상이어야 합니다."))
+                .andExpect(jsonPath("message").value(ErrorMessages.NOT_VALID_PRICE_EXCEPTION))
                 .andDo(print());
     }
 
@@ -82,7 +83,7 @@ public class UpdateProduct extends ProductFactory{
                         .content(objectMapper.writeValueAsString(request)))
                 .andExpect(status().isBadRequest())
                 .andExpect(jsonPath("status").value(400))
-                .andExpect(jsonPath("message").value("재고는 0개 이상이어야합니다."))
+                .andExpect(jsonPath("message").value(ErrorMessages.NOT_VALID_STOCK_EXCEPTION))
                 .andDo(print());
     }
 

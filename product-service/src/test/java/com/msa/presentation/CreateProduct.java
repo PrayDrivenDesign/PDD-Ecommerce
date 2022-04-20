@@ -3,6 +3,7 @@ package com.msa.presentation;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.msa.application.dtos.Requests;
+import com.msa.common.ErrorMessages;
 import com.msa.domain.Category;
 import com.msa.presentation.factory.ProductFactory;
 import org.junit.jupiter.api.DisplayName;
@@ -68,7 +69,7 @@ public class CreateProduct extends ProductFactory{
                         .content(objectMapper.writeValueAsString(request)))
                 .andExpect(status().isBadRequest())
                 .andExpect(jsonPath("status").value(400))
-                .andExpect(jsonPath("message").value("가격은 0원 이상이어야 합니다."))
+                .andExpect(jsonPath("message").value(ErrorMessages.NOT_VALID_PRICE_EXCEPTION))
                 .andDo(print());
     }
 
@@ -84,7 +85,7 @@ public class CreateProduct extends ProductFactory{
                         .content(objectMapper.writeValueAsString(request)))
                 .andExpect(status().isBadRequest())
                 .andExpect(jsonPath("status").value(400))
-                .andExpect(jsonPath("message").value("재고는 0개 이상이어야합니다."))
+                .andExpect(jsonPath("message").value(ErrorMessages.NOT_VALID_STOCK_EXCEPTION))
                 .andDo(print());
     }
 
@@ -99,7 +100,7 @@ public class CreateProduct extends ProductFactory{
                         .content(objectMapper.writeValueAsString(request)))
                 .andExpect(status().isBadRequest())
                 .andExpect(jsonPath("status").value(400))
-                .andExpect(jsonPath("message").value("존재하지 않는 카테고리입니다."))
+                .andExpect(jsonPath("message").value(ErrorMessages.CATEGORY_NOT_FOUND_EXCEPTION))
                 .andDo(print());
     }
 

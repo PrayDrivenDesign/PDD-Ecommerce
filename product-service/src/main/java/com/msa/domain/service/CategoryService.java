@@ -1,5 +1,6 @@
 package com.msa.domain.service;
 
+import com.msa.common.ErrorMessages;
 import com.msa.domain.Category;
 import com.msa.domain.repository.CategoryRepository;
 import lombok.RequiredArgsConstructor;
@@ -20,7 +21,7 @@ public class CategoryService {
     @Transactional
     public Category createCategory(String categoryName) {
         if (categoryRepository.existsByName(categoryName)) {
-            throw new IllegalArgumentException("이미 존재하는 카테고리입니다.");
+            throw new IllegalArgumentException(ErrorMessages.ALREADY_EXISTED_CATEGORY_EXCEPTION);
         }
         Category category = Category.builder().categoryName(categoryName).build();
         return categoryRepository.save(category);

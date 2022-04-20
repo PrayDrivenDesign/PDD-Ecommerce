@@ -2,6 +2,7 @@ package com.msa.presentation;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.msa.application.dtos.Requests;
+import com.msa.common.ErrorMessages;
 import com.msa.presentation.factory.ProductFactory;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -51,7 +52,7 @@ public class CreateCategory extends ProductFactory {
                         .content(objectMapper.writeValueAsString(request)))
                 .andExpect(status().isBadRequest())
                 .andExpect(jsonPath("status").value(400))
-                .andExpect(jsonPath("message").value("이미 존재하는 카테고리입니다."))
+                .andExpect(jsonPath("message").value(ErrorMessages.ALREADY_EXISTED_CATEGORY_EXCEPTION))
                 .andDo(print());
     }
 

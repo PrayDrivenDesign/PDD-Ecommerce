@@ -1,5 +1,6 @@
 package com.msa.infrastructure.adapter;
 
+import com.msa.common.ErrorMessages;
 import com.msa.domain.Category;
 import com.msa.domain.repository.CategoryRepository;
 import com.msa.infrastructure.jpaRepository.JpaCategoryRepository;
@@ -14,7 +15,7 @@ public class CategoryRepositoryAdapter implements CategoryRepository {
 
     @Override
     public Category findById(Long categoryId) {
-        return jpaCategoryRepository.findById(categoryId).orElseThrow(()->new IllegalArgumentException("존재하지 않는 카테고리입니다."));
+        return jpaCategoryRepository.findById(categoryId).orElseThrow(()->new IllegalArgumentException(ErrorMessages.CATEGORY_NOT_FOUND_EXCEPTION));
     }
 
     @Override
