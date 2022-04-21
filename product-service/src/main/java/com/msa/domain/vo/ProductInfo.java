@@ -1,5 +1,6 @@
 package com.msa.domain.vo;
 
+import com.msa.common.ErrorMessages;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -45,7 +46,7 @@ public class ProductInfo {
     public void reduceStock(int counts) {
         this.currentStock = new Stock(currentStock.getCount() - counts);
         if (currentStock.getCount() < 0) {
-            throw new IllegalArgumentException("재고가 음수가 되는 경우 발생!!");
+            throw new IllegalArgumentException(ErrorMessages.NEGATIVE_STOCK_EXCEPTION);
         }
     }
 }

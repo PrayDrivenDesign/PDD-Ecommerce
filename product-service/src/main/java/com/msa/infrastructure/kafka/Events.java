@@ -5,12 +5,12 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-public class Message {
+public class Events {
 
     @Getter
     @AllArgsConstructor
     @NoArgsConstructor(access = AccessLevel.PROTECTED)
-    public static class CreateProductRequest {
+    public static class ProductCreatedEvent {
         private Long productId;
         private String name;
         private int price;
@@ -19,9 +19,17 @@ public class Message {
     @Getter
     @AllArgsConstructor
     @NoArgsConstructor(access = AccessLevel.PROTECTED)
-    public static class UpdateProductRequest {
+    public static class ProductUpdatedEvent {
         private Long productId;
         private String name;
         private int price;
+    }
+
+    @Getter
+    @AllArgsConstructor
+    @NoArgsConstructor(access = AccessLevel.PROTECTED)
+    public static class OrderCompletedEvent {
+        private Long productId;
+        private int orderedProductCount;
     }
 }
