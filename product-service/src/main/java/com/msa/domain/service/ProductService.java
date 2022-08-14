@@ -46,9 +46,4 @@ public class ProductService {
         Product product = productRepository.findById(event.getProductId());
         product.orderProduct(event.getOrderedProductCount());
     }
-
-    @Transactional
-    public void save(Product product) {
-        productRepository.save(product);
-    }
 }
